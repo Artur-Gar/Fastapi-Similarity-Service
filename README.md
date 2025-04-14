@@ -43,13 +43,13 @@ This will start:
 ---
 
 ## 🧪 API Endpoints
-Use http://localhost:8000/docs to access Swagger UI.
-- GET /company/{id} – Get company by ID
-- GET /similar?company_id=X&top_k=Y – Get top K similar companies
-- POST /companies – Add a company
-- PUT /company/{id} – Update all fields of a company
-- PATCH /company/{id} – Update selected fields
-- DELETE /company/{id} – Delete a company
+Use `http://localhost:8000/docs` to access Swagger UI.
+- `GET /company/{id}` – Get company by ID
+- `GET /similar?company_id=X&top_k=Y` – Get top K similar companies
+- `POST /companies` – Add a company
+- `PUT /company/{id}` – Update all fields of a company
+- `PATCH /company/{id}` – Update selected fields
+- `DELETE /company/{id}` – Delete a company
 
 ---
 
