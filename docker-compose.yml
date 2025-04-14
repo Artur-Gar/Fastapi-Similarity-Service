@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:13
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:  # Wait until DB is ready
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
+  seed:
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy  # Wait for DB to be ready
+    command: python data_generator.py
+
+  api:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      seed:
+        condition: service_completed_successfully  # Wait until seed finishes OK
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+
+volumes:
+  pgdata:
